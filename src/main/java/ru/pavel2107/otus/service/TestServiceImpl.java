@@ -49,9 +49,11 @@ public class TestServiceImpl implements TestService {
     private String translated( String str, String[] arr){
         return messageSource.getMessage(str,  arr,  locale);
     }
-
     private String translated( String str){
-        return translated(str,  new String[]{});
+        return messageSource.getMessage(str,  new String[]{},  locale);
+    }
+    private String translated( String str, String mess){
+        return translated( str, new String[]{ mess});
     }
 
 
@@ -77,12 +79,12 @@ public class TestServiceImpl implements TestService {
         Scanner scanner = new Scanner( System.in);
         for( int i = 0; i < questionList.size(); i++){
             Question question = questionList.get( i);
-            System.out.println( "Вопрос # " + question.getId() + " : " + question.getQuestion());
-            System.out.println( "Варианты ответа");
+            System.out.println( translated( "question.say", new String[]{ question.getId(),  question.getQuestion()}) );
+            System.out.println( translated( "question.variants"));
             for( int j = 0; j < question.getAnswers().size(); j++ ) {
                 System.out.println( "  " + (j+1) + ")" + question.getAnswers().get( j )) ;
             }
-            System.out.print( "Введите номер ответа: "); int answer = scanner.nextInt();
+            System.out.print( translated("question.enter_answer_number")); int answer = scanner.nextInt();
             testStore.addAnswer( question.getId(), answer);
         }
     }
@@ -90,19 +92,19 @@ public class TestServiceImpl implements TestService {
     public void showResult(){
         List<Question> questionList = new ArrayList<>(questionRepository.getAll());
         int correctAnswers = 0;
-        System.out.println( "Результаты тестирования " + testStore.getStudent().toString());
+        System.out.println( translated( "results.header", testStore.getStudent().toString()));
         for( Question question : questionList){
             System.out.print( question.toString() + ". ");
             int studentAnswer = testStore.getAnswers().get( question.getId());
-            System.out.print( "Вы дали ответ "  + studentAnswer );
+            System.out.print( translated( "results.answer", Integer.toString( studentAnswer)) );
             if( question.getCorrectAnswer() == studentAnswer){
                 correctAnswers++;
-                System.out.println( "         ->ай, молодца!");
+                System.out.println( translated("results.ok"));
             } else {
-                System.out.println( "         ->лошок!");
+                System.out.println( translated( "results.error"));
             }
         }
-        System.out.println( "Всего было " + correctAnswers + " правильных ответов.");
+        System.out.println( translated( "results.correct_answers", Integer.toString( correctAnswers)));
 
     }
 
