@@ -51,7 +51,7 @@ public class TestServiceImpl implements TestService {
     }
 
     private String translated( String str){
-        return messageSource.getMessage(str,  new String[]{},  locale);
+        return translated(str,  new String[]{});
     }
 
 
