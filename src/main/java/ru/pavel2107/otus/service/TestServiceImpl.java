@@ -45,13 +45,23 @@ public class TestServiceImpl implements TestService {
         return true;
     }
 
+
+    private String translated( String str, String[] arr){
+        return messageSource.getMessage(str,  arr,  locale);
+    }
+
+    private String translated( String str){
+        return messageSource.getMessage(str,  new String[]{},  locale);
+    }
+
+
     public boolean inviteStudent(){
         String name;
         String surname;
         Scanner scanner = new Scanner( System.in);
-        System.out.println( messageSource.getMessage("hello.user",     new String[]{},  locale));
-        System.out.print( messageSource.getMessage("enter_u_name",     new String[]{},  locale)); name    = scanner.next();
-        System.out.print( messageSource.getMessage("enter_u_surname",  new String[]{},  locale)); surname = scanner.next();
+        System.out.println( translated( "hello.user"));
+        System.out.print( translated( "enter_u_name")); name    = scanner.next();
+        System.out.print( translated("enter_u_surname")); surname = scanner.next();
 
         if( name == null || surname == null){
             return false;
@@ -84,7 +94,7 @@ public class TestServiceImpl implements TestService {
         for( Question question : questionList){
             System.out.print( question.toString() + ". ");
             int studentAnswer = testStore.getAnswers().get( question.getId());
-            System.out.print( "IВы дали ответ "  + studentAnswer );
+            System.out.print( "Вы дали ответ "  + studentAnswer );
             if( question.getCorrectAnswer() == studentAnswer){
                 correctAnswers++;
                 System.out.println( "         ->ай, молодца!");
