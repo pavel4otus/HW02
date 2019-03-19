@@ -1,0 +1,4 @@
+1;Is where life on Mars;1;yes;no;don't know
+2;Your sex is;1;male;female;shemale
+3;Java version is;2;1.5;1.8;10;11
+4;What color is the green wall?;3;red;yellow;green
